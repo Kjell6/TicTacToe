@@ -8,6 +8,7 @@ public class GameLogic {
     private int startingPlayer = 1;
     public int player = 1;
     public boolean botActive = false;
+    public int difficulty = 3;
     private Layout layout;
 
     public GameLogic() {
@@ -333,8 +334,25 @@ public class GameLogic {
     }
 
     public void bot() {
-        if (!winningRows() && !winningColumn() && !winningDiagonal()
-                && !losingRows() && !losingColumn() && !losingDiagonal()) {
+        if (difficulty == 3) {
+            if (!winningRows() && !winningColumn() && !winningDiagonal()
+                    && !losingRows() && !losingColumn() && !losingDiagonal()) {
+                botRandom();
+            }
+        }
+        if (difficulty == 2) {
+            Random rand = new Random();
+            int diff = rand.nextInt(3);
+            if (diff == 0) {
+                if (!winningRows() && !winningColumn() && !winningDiagonal()
+                        && !losingRows() && !losingColumn() && !losingDiagonal()) {
+                    botRandom();
+                }
+            } else {
+                botRandom();
+            }
+        }
+        if (difficulty == 1) {
             botRandom();
         }
     }

@@ -10,11 +10,13 @@ public class Layout {
     private JEditorPane scoreTextO = new JEditorPane("text/html", "");
     private JButton botButton = new JButton("enable Bot");
     private JButton playerButton = new JButton("Starting Player: X");
+    private JButton difficultyButton = new JButton("Difficulty: Hard");
     private GameLogic gameLogic;
     private ResetController resetController;
     private BotController botController;
     private FieldController fieldController;
     private PlayerController playerController;
+    private DifficultyController difficultyController;
 
     public Layout(GameLogic gl) {
         frame.setLayout(new GridBagLayout());
@@ -75,6 +77,10 @@ public class Layout {
         botButton.addMouseListener(botController);
         botButton.setForeground(new Color(90, 158, 94));
         bottomPanel.add(botButton);
+
+        this.difficultyController = new DifficultyController(gl);
+        difficultyButton.addMouseListener(difficultyController);
+        bottomPanel.add(difficultyButton);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
