@@ -20,7 +20,12 @@ public class GameLogic {
                 b.setText("");
             }
         }
-        player = startingPlayer;
+        if (botActive && startingPlayer % 2 == 0) {
+            bot();
+            player = 1;
+        } else {
+            player = startingPlayer;
+        }
     }
 
     public void score(String playerTxt) {
@@ -62,13 +67,19 @@ public class GameLogic {
         return false;
     }
 
-    public void showWinner() {
+    public String getWinner() {
         String winner = "";
         if (player % 2 == 0) {
             winner ="X";
         } else {
             winner = "O";
+            if (botActive && startingPlayer % 2 == 0) player++;
         }
+        return winner;
+    }
+
+    public void showWinner() {
+        String winner = getWinner();
         JOptionPane.showMessageDialog(layout.frame, String.format("Player %s wins!", winner));
         reset();
         score(winner);
@@ -101,6 +112,7 @@ public class GameLogic {
         int count = 0;
         int countX = 0;
         int row = -1;
+        String botPlayer = "";
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (buttons[i][j].getText().equals("O")) count++;

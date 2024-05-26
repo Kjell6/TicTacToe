@@ -16,6 +16,7 @@ public class BotController extends MouseAdapter {
             button.setText("disable Bot");
             button.setForeground(new Color(201, 79, 79));
             gameLogic.botActive = true;
+            gameLogic.reset();
         } else {
             button.setText("enable Bot");
             button.setForeground(new Color(90, 158, 94));
