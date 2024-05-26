@@ -294,6 +294,16 @@ public class GameLogic {
             botRandom();
         }
     }
+
+    public void playerButtonBot() {
+        if (startingPlayer % 2 == 0) {
+            if (botActive) {
+                layout.setPlayerButton("Starting Player: O (Bot)");
+            } else {
+                layout.setPlayerButton("Starting Player: O");
+            }
+        }
+    }
     //End Bot Logic
 
     public void setStartingPlayerPlayer(int p) {

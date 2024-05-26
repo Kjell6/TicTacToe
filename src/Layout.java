@@ -61,6 +61,10 @@ public class Layout {
         return res;
     }
 
+    public void setPlayerButton(String txt) {
+        playerButton.setText(txt);
+    }
+
     public JEditorPane getScoreText() {
         return this.scoreText;
     }
