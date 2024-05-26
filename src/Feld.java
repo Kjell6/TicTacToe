@@ -3,42 +3,43 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Feld extends MouseAdapter {
-    public int player = 1;
     private Layout layout;
     private String playerTxt = "";
+    private GameLogic gameLogic;
 
-    public Feld(Layout layout) {
-        this.layout = layout;
+    public Feld(GameLogic gl) {
+        this.gameLogic = gl;
+
     }
 
     public void mousePressed(MouseEvent e) {
         JButton button = (JButton) e.getSource();
         if (button.getText().isEmpty()) {
-            if (player % 2 != 0) {
-                player++;
+            if (gameLogic.player % 2 != 0) {
+                gameLogic.player++;
                 playerTxt ="X";
                 button.setText(playerTxt);
             } else {
-                player++;
+                gameLogic.player++;
                 playerTxt = "O";
                 button.setText(playerTxt);
             }
 
-            if(layout.botActive && !layout.checkWin()) {
-                player++;
-                layout.bot();
+            if(gameLogic.botActive && !gameLogic.checkWin()) {
+                gameLogic.player++;
+                gameLogic.bot();
             }
 
-            if (layout.checkWin()) {
+            if (gameLogic.checkWin()) {
                 String winner = "";
-                if (player % 2 == 0) {
+                if (gameLogic.player % 2 == 0) {
                     winner ="X";
                 } else {
                     winner = "O";
                 }
                 JOptionPane.showMessageDialog(layout.frame, String.format("Player %s wins!", winner));
-                layout.reset();
-                layout.score(winner);
+                gameLogic.reset();
+                gameLogic.score(winner);
             }
         }
     }
