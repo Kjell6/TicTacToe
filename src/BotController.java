@@ -3,11 +3,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Bot extends MouseAdapter {
+public class BotController extends MouseAdapter {
     private Layout layout;
     private GameLogic gameLogic;
 
-    public Bot(GameLogic gl) {
+    public BotController(GameLogic gl) {
         this.gameLogic = gl;
     }
 

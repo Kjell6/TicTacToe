@@ -5,41 +5,41 @@ import java.util.Random;
 public class Layout {
     public JFrame frame = new JFrame("TicTacToe");
     private JButton[][] buttons = new JButton[3][3];
-    private JButton resB = new JButton("Reset");
-    private JEditorPane text = new JEditorPane();
-    private JButton botB = new JButton("enable Bot");
+    private JButton resetButton = new JButton("Reset");
+    private JEditorPane scoreText = new JEditorPane();
+    private JButton botButton = new JButton("enable Bot");
     private GameLogic gameLogic;
-    private Reset resetButton;
-    private Bot botButton;
-    private  Feld feldButton;
+    private ResetController resetController;
+    private BotController botController;
+    private FieldController fieldController;
 
     public Layout(GameLogic gl) {
         this.gameLogic = gl;
-        this.feldButton = new Feld(gl);
+        this.fieldController = new FieldController(gl);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j] = new JButton("");
-                buttons[i][j].addMouseListener(feldButton);
+                buttons[i][j].addMouseListener(fieldController);
                 frame.add(buttons[i][j]);
             }
         }
 
-        this.resetButton = new Reset(gl);
-        resB.addMouseListener(resetButton);
-        frame.add(resB);
-        resB.setForeground(new Color(201, 79, 79));
+        this.resetController = new ResetController(gl);
+        resetButton.addMouseListener(resetController);
+        frame.add(resetButton);
+        resetButton.setForeground(new Color(201, 79, 79));
 
         frame.setLayout(new GridLayout(4,3));
         frame.setSize(new Dimension(500, 600));
 
-        text.setEditable(false);
-        frame.add(text);
-        text.setText("Player X: 0 Points\nPlayer O: 0 Points");
+        scoreText.setEditable(false);
+        frame.add(scoreText);
+        scoreText.setText("Player X: 0 Points\nPlayer O: 0 Points");
 
-        this.botButton = new Bot(gl);
-        botB.addMouseListener(botButton);
-        botB.setForeground(new Color(90, 158, 94));
-        frame.add(botB);
+        this.botController = new BotController(gl);
+        botButton.addMouseListener(botController);
+        botButton.setForeground(new Color(90, 158, 94));
+        frame.add(botButton);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -56,6 +56,6 @@ public class Layout {
     }
 
     public JEditorPane getScoreText() {
-        return this.text;
+        return this.scoreText;
     }
 }

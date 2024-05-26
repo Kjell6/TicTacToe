@@ -2,23 +2,14 @@ import javax.swing.*;
 import java.util.Random;
 
 public class GameLogic {
-    private int pX = 0;
-    private int pY = 0;
+    private int scoreX = 0;
+    private int scoreY = 0;
     public int player = 1;
     public boolean botActive = false;
     private Layout layout;
 
     public GameLogic() {
         this.layout = new Layout(this);
-    }
-
-    public void score(String playerTxt) {
-        if (playerTxt.equals("X")) {
-            pX++;
-        } else {
-            pY++;
-        }
-        layout.getScoreText().setText(String.format("Player X: %d Points\nPlayer O: %d Points", pX, pY));
     }
 
     public void reset() {
@@ -33,6 +24,15 @@ public class GameLogic {
 
     public void setPlayer(int p) {
         player = p;
+    }
+
+    public void score(String playerTxt) {
+        if (playerTxt.equals("X")) {
+            scoreX++;
+        } else {
+            scoreY++;
+        }
+        layout.getScoreText().setText(String.format("Player X: %d Points\nPlayer O: %d Points", scoreX, scoreY));
     }
 
     public boolean checkWin() {

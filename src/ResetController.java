@@ -3,11 +3,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Reset extends MouseAdapter {
+public class ResetController extends MouseAdapter {
     Layout layout;
     private GameLogic gameLogic;
 
-    public Reset(GameLogic gl) {
+    public ResetController(GameLogic gl) {
         this.gameLogic = gl;
     }
 

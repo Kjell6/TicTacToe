@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Feld extends MouseAdapter {
+public class FieldController extends MouseAdapter {
     private Layout layout;
     private String playerTxt = "";
     private GameLogic gameLogic;
 
-    public Feld(GameLogic gl) {
+    public FieldController(GameLogic gl) {
         this.gameLogic = gl;
 
     }
