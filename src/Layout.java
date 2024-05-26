@@ -20,7 +20,7 @@ public class Layout {
 
     public Layout(GameLogic gl) {
         frame.setLayout(new GridBagLayout());
-        frame.setSize(new Dimension(500, 600));
+        frame.setSize(new Dimension(600, 600));
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -63,6 +63,7 @@ public class Layout {
 
         // Bottom Panel
         JPanel bottomPanel = new JPanel(new GridLayout(1, 4));
+
         this.resetController = new ResetController(gl);
         resetButton.addMouseListener(resetController);
         bottomPanel.add(resetButton);

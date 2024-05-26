@@ -343,7 +343,7 @@ public class GameLogic {
         if (difficulty == 2) {
             Random rand = new Random();
             int diff = rand.nextInt(3);
-            if (diff == 0) {
+            if (diff != 0) {
                 if (!winningRows() && !winningColumn() && !winningDiagonal()
                         && !losingRows() && !losingColumn() && !losingDiagonal()) {
                     botRandom();
