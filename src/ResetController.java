@@ -4,7 +4,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ResetController extends MouseAdapter {
-    Layout layout;
     private GameLogic gameLogic;
 
     public ResetController(GameLogic gl) {

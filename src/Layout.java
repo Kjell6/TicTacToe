@@ -8,10 +8,12 @@ public class Layout {
     private JButton resetButton = new JButton("Reset");
     private JEditorPane scoreText = new JEditorPane();
     private JButton botButton = new JButton("enable Bot");
+    private JButton playerButton = new JButton("Starting Player: X");
     private GameLogic gameLogic;
     private ResetController resetController;
     private BotController botController;
     private FieldController fieldController;
+    private PlayerController playerController;
 
     public Layout(GameLogic gl) {
         this.gameLogic = gl;
@@ -29,7 +31,7 @@ public class Layout {
         frame.add(resetButton);
         resetButton.setForeground(new Color(201, 79, 79));
 
-        frame.setLayout(new GridLayout(4,3));
+        frame.setLayout(new GridLayout(5,3));
         frame.setSize(new Dimension(500, 600));
 
         scoreText.setEditable(false);
@@ -40,6 +42,10 @@ public class Layout {
         botButton.addMouseListener(botController);
         botButton.setForeground(new Color(90, 158, 94));
         frame.add(botButton);
+
+        this.playerController = new PlayerController(gl);
+        playerButton.addMouseListener(playerController);
+        frame.add(playerButton);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

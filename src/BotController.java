@@ -4,7 +4,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class BotController extends MouseAdapter {
-    private Layout layout;
     private GameLogic gameLogic;
 
     public BotController(GameLogic gl) {

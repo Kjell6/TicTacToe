@@ -4,6 +4,7 @@ import java.util.Random;
 public class GameLogic {
     private int scoreX = 0;
     private int scoreY = 0;
+    private int startingPlayer = 1;
     public int player = 1;
     public boolean botActive = false;
     private Layout layout;
@@ -19,11 +20,7 @@ public class GameLogic {
                 b.setText("");
             }
         }
-        setPlayer(1);
-    }
-
-    public void setPlayer(int p) {
-        player = p;
+        player = startingPlayer;
     }
 
     public void score(String playerTxt) {
@@ -286,6 +283,18 @@ public class GameLogic {
         }
     }
     //End Bot Logic
+
+    public void setStartingPlayerPlayer(int p) {
+        startingPlayer = p;
+    }
+
+    public int getStartingPlayer() {
+        return startingPlayer;
+    }
+
+    public int getPlayer() {
+        return player;
+    }
 
     public static void main(String[] args) {
         GameLogic gameLogic = new GameLogic();

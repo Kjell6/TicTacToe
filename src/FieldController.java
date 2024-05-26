@@ -3,7 +3,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class FieldController extends MouseAdapter {
-    private Layout layout;
     private String playerTxt = "";
     private GameLogic gameLogic;
 
