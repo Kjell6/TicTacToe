@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,10 +18,12 @@ public class FieldController extends MouseAdapter {
             if (gameLogic.player % 2 != 0) {
                 gameLogic.player++;
                 playerTxt ="X";
+                button.setForeground(new Color(35, 68, 167));
                 button.setText(playerTxt);
             } else {
                 gameLogic.player++;
                 playerTxt = "O";
+                button.setForeground(new Color(178, 70, 145));
                 button.setText(playerTxt);
             }
 

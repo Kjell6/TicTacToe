@@ -16,10 +16,12 @@ public class PlayerController extends MouseAdapter {
         if ((player % 2) != 0) {
             gameLogic.setStartingPlayerPlayer(0);
             button.setText("Starting Player: O");
+            button.setForeground(new Color(178, 70, 145));
             gameLogic.playerButtonBot();
         } else {
             gameLogic.setStartingPlayerPlayer(1);
             button.setText("Starting Player: X");
+            button.setForeground(new Color(35, 68, 167));
         }
         gameLogic.reset();
     }

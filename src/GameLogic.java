@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.Random;
 
 public class GameLogic {
@@ -34,7 +35,9 @@ public class GameLogic {
         } else {
             scoreY++;
         }
-        layout.getScoreText().setText(String.format("Player X: %d Points\nPlayer O: %d Points", scoreX, scoreY));
+        JEditorPane[] scores = layout.getScoreTexts();
+        scores[0].setText(String.format("<html><center><span style='font-family: Lucida Grande; font-size: 25pt; color: rgb(35, 68, 167);'>X - %d</span></center></html>", scoreX));
+        scores[1].setText(String.format("<html><center><span style='font-family: Lucida Grande; font-size: 25pt; color: rgb(178, 70, 145);'>O - %d</span></center></html>", scoreY));
     }
 
     public boolean checkWin() {
@@ -102,6 +105,7 @@ public class GameLogic {
 
         if (buttons[y][x].getText().isEmpty()) {
             buttons[y][x].setText("O");
+            buttons[y][x].setForeground(new Color(178, 70, 145));
         } else {
             if (usedFields < 9) botRandom();
         }
@@ -127,6 +131,7 @@ public class GameLogic {
             for (int i = 0; i < 3; i++) {
                 if (buttons[row][i].getText().isEmpty()) {
                     buttons[row][i].setText("O");
+                    buttons[row][i].setForeground(new Color(178, 70, 145));
                     i = 3;
                 }
             }
@@ -154,6 +159,7 @@ public class GameLogic {
             for (int i = 0; i < 3; i++) {
                 if (buttons[i][column].getText().isEmpty()) {
                     buttons[i][column].setText("O");
+                    buttons[i][column].setForeground(new Color(178, 70, 145));
                     i = 3;
                 }
             }
@@ -175,6 +181,7 @@ public class GameLogic {
             for (int j = 0; j < 3; j++) {
                 if (buttons[j][j].getText().isEmpty()) {
                     buttons[j][j].setText("O");
+                    buttons[j][j].setForeground(new Color(178, 70, 145));
                     return true;
                 }
             }
@@ -191,6 +198,7 @@ public class GameLogic {
             for (int i = 2, j = 0; j < 3; j++, i--) {
                 if (buttons[i][j].getText().isEmpty()) {
                     buttons[i][j].setText("O");
+                    buttons[j][j].setForeground(new Color(178, 70, 145));
                     return true;
                 }
             }
@@ -217,6 +225,7 @@ public class GameLogic {
             for (int i = 0; i < 3; i++) {
                 if (buttons[row][i].getText().isEmpty()) {
                     buttons[row][i].setText("O");
+                    buttons[row][i].setForeground(new Color(178, 70, 145));
                     i = 3;
                 }
             }
@@ -244,6 +253,7 @@ public class GameLogic {
             for (int i = 0; i < 3; i++) {
                 if (buttons[i][column].getText().isEmpty()) {
                     buttons[i][column].setText("O");
+                    buttons[i][column].setForeground(new Color(178, 70, 145));
                     i = 3;
                 }
             }
@@ -265,6 +275,7 @@ public class GameLogic {
             for (int j = 0; j < 3; j++) {
                 if (buttons[j][j].getText().isEmpty()) {
                     buttons[j][j].setText("O");
+                    buttons[j][j].setForeground(new Color(178, 70, 145));
                     return true;
                 }
             }
@@ -281,6 +292,7 @@ public class GameLogic {
             for (int i = 2, j = 0; j < 3; j++, i--) {
                 if (buttons[i][j].getText().isEmpty()) {
                     buttons[i][j].setText("O");
+                    buttons[j][j].setForeground(new Color(178, 70, 145));
                     return true;
                 }
             }
