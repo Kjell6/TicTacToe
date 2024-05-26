@@ -31,15 +31,7 @@ public class Feld extends MouseAdapter {
             }
 
             if (gameLogic.checkWin()) {
-                String winner = "";
-                if (gameLogic.player % 2 == 0) {
-                    winner ="X";
-                } else {
-                    winner = "O";
-                }
-                JOptionPane.showMessageDialog(layout.frame, String.format("Player %s wins!", winner));
-                gameLogic.reset();
-                gameLogic.score(winner);
+                gameLogic.showWinner();
             }
         }
     }

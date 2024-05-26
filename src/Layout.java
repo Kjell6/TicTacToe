@@ -3,12 +3,12 @@ import java.awt.*;
 import java.util.Random;
 
 public class Layout {
-    JFrame frame = new JFrame("TicTacToe");
-    JButton[][] buttons = new JButton[3][3];
-    JButton resB = new JButton("Reset");
-    JEditorPane text = new JEditorPane();
-    JButton botB = new JButton("enable Bot");
-    GameLogic gameLogic;
+    public JFrame frame = new JFrame("TicTacToe");
+    private JButton[][] buttons = new JButton[3][3];
+    private JButton resB = new JButton("Reset");
+    private JEditorPane text = new JEditorPane();
+    private JButton botB = new JButton("enable Bot");
+    private GameLogic gameLogic;
     private Reset resetButton;
     private Bot botButton;
     private  Feld feldButton;

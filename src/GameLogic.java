@@ -2,18 +2,18 @@ import javax.swing.*;
 import java.util.Random;
 
 public class GameLogic {
-    int pX = 0;
-    int pY = 0;
+    private int pX = 0;
+    private int pY = 0;
     public int player = 1;
-    boolean botActive = false;
-    Layout layout;
+    public boolean botActive = false;
+    private Layout layout;
 
     public GameLogic() {
         this.layout = new Layout(this);
     }
 
-    public void score(String player) {
-        if (player.equals("X")) {
+    public void score(String playerTxt) {
+        if (playerTxt.equals("X")) {
             pX++;
         } else {
             pY++;
@@ -63,6 +63,18 @@ public class GameLogic {
             return true;
         }
         return false;
+    }
+
+    public void showWinner() {
+        String winner = "";
+        if (player % 2 == 0) {
+            winner ="X";
+        } else {
+            winner = "O";
+        }
+        JOptionPane.showMessageDialog(layout.frame, String.format("Player %s wins!", winner));
+        reset();
+        score(winner);
     }
 
     // Start Bot Logic
