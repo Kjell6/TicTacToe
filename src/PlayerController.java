@@ -15,7 +15,7 @@ public class PlayerController extends MouseAdapter {
         int player = gameLogic.getStartingPlayer();
         if ((player % 2) != 0) {
             gameLogic.setStartingPlayerPlayer(0);
-            button.setText("Starting Player: 0");
+            button.setText("Starting Player: O");
             gameLogic.playerButtonBot();
         } else {
             gameLogic.setStartingPlayerPlayer(1);

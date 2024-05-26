@@ -32,7 +32,7 @@ public class Layout {
         resetButton.setForeground(new Color(201, 79, 79));
 
         frame.setLayout(new GridLayout(5,3));
-        frame.setSize(new Dimension(500, 600));
+        frame.setSize(new Dimension(500, 700));
 
         scoreText.setEditable(false);
         frame.add(scoreText);
