@@ -83,7 +83,15 @@ public class GameLogic {
 
     public void showWinner() {
         String winner = getWinner();
-        JOptionPane.showMessageDialog(layout.frame, String.format("Player %s wins!", winner));
+        String color = "";
+        if (winner.equals("X")) {
+            color = "rgb(35, 68, 167)";
+        } else {
+            color = "rgb(178, 70, 145)";
+        }
+        JOptionPane.showMessageDialog(layout.frame,
+                String.format("<html><center><span style='font-family: Lucida Grande; font-size: 20pt; color: %s;'>Player %s wins!</span></center></html>", color, winner),
+            "Winner", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("/Users/kjell/Dokumente/Programmieren/TicTacToe/src/1021220.png"));
         reset();
         score(winner);
     }
@@ -106,6 +114,9 @@ public class GameLogic {
         if (buttons[y][x].getText().isEmpty()) {
             buttons[y][x].setText("O");
             buttons[y][x].setForeground(new Color(178, 70, 145));
+            Font currentFont = buttons[y][x].getFont();
+            Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+            buttons[y][x].setFont(newFont);
         } else {
             if (usedFields < 9) botRandom();
         }
@@ -132,6 +143,9 @@ public class GameLogic {
                 if (buttons[row][i].getText().isEmpty()) {
                     buttons[row][i].setText("O");
                     buttons[row][i].setForeground(new Color(178, 70, 145));
+                    Font currentFont = buttons[row][i].getFont();
+                    Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+                    buttons[row][i].setFont(newFont);
                     i = 3;
                 }
             }
@@ -160,6 +174,9 @@ public class GameLogic {
                 if (buttons[i][column].getText().isEmpty()) {
                     buttons[i][column].setText("O");
                     buttons[i][column].setForeground(new Color(178, 70, 145));
+                    Font currentFont = buttons[i][column].getFont();
+                    Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+                    buttons[i][column].setFont(newFont);
                     i = 3;
                 }
             }
@@ -182,6 +199,9 @@ public class GameLogic {
                 if (buttons[j][j].getText().isEmpty()) {
                     buttons[j][j].setText("O");
                     buttons[j][j].setForeground(new Color(178, 70, 145));
+                    Font currentFont = buttons[j][j].getFont();
+                    Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+                    buttons[j][j].setFont(newFont);
                     return true;
                 }
             }
@@ -226,6 +246,9 @@ public class GameLogic {
                 if (buttons[row][i].getText().isEmpty()) {
                     buttons[row][i].setText("O");
                     buttons[row][i].setForeground(new Color(178, 70, 145));
+                    Font currentFont = buttons[row][i].getFont();
+                    Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+                    buttons[row][i].setFont(newFont);
                     i = 3;
                 }
             }
@@ -254,6 +277,9 @@ public class GameLogic {
                 if (buttons[i][column].getText().isEmpty()) {
                     buttons[i][column].setText("O");
                     buttons[i][column].setForeground(new Color(178, 70, 145));
+                    Font currentFont = buttons[i][column].getFont();
+                    Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+                    buttons[i][column].setFont(newFont);
                     i = 3;
                 }
             }
@@ -276,6 +302,9 @@ public class GameLogic {
                 if (buttons[j][j].getText().isEmpty()) {
                     buttons[j][j].setText("O");
                     buttons[j][j].setForeground(new Color(178, 70, 145));
+                    Font currentFont = buttons[j][j].getFont();
+                    Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+                    buttons[j][j].setFont(newFont);
                     return true;
                 }
             }
@@ -292,7 +321,10 @@ public class GameLogic {
             for (int i = 2, j = 0; j < 3; j++, i--) {
                 if (buttons[i][j].getText().isEmpty()) {
                     buttons[i][j].setText("O");
-                    buttons[j][j].setForeground(new Color(178, 70, 145));
+                    buttons[i][j].setForeground(new Color(178, 70, 145));
+                    Font currentFont = buttons[i][j].getFont();
+                    Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+                    buttons[i][j].setFont(newFont);
                     return true;
                 }
             }

@@ -32,6 +32,10 @@ public class FieldController extends MouseAdapter {
                 gameLogic.bot();
             }
 
+            Font currentFont = button.getFont();
+            Font newFont = new Font(currentFont.getName(), currentFont.getStyle(), 20); // Hier 20 durch Ihre gewünschte Größe ersetzen
+            button.setFont(newFont);
+
             if (gameLogic.checkWin()) {
                 gameLogic.showWinner();
             }

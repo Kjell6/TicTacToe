@@ -18,7 +18,7 @@ public class Layout {
 
     public Layout(GameLogic gl) {
         frame.setLayout(new GridBagLayout());
-        frame.setSize(new Dimension(500, 625));
+        frame.setSize(new Dimension(500, 600));
 
         GridBagConstraints gbc = new GridBagConstraints();
 
