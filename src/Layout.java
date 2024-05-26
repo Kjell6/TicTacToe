@@ -64,7 +64,7 @@ public class Layout {
         this.resetController = new ResetController(gl);
         resetButton.addMouseListener(resetController);
         bottomPanel.add(resetButton);
-        resetButton.setForeground(new Color(245, 26, 0));
+        resetButton.setForeground(new Color(201, 79, 79));
 
         this.playerController = new PlayerController(gl);
         playerButton.addMouseListener(playerController);
@@ -73,7 +73,7 @@ public class Layout {
 
         this.botController = new BotController(gl);
         botButton.addMouseListener(botController);
-        botButton.setForeground(new Color(0, 172, 99));
+        botButton.setForeground(new Color(90, 158, 94));
         bottomPanel.add(botButton);
 
         gbc.gridx = 0;
