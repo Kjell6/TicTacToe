@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.TimeUnit;
 
 public class FieldController extends MouseAdapter {
     private String playerTxt = "";
@@ -38,6 +41,9 @@ public class FieldController extends MouseAdapter {
 
             if (gameLogic.checkWin()) {
                 gameLogic.showWinner();
+            }
+            if (gameLogic.full()) {
+                gameLogic.delayedReset();
             }
         }
     }

@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class GameLogic {
     private int scoreX = 0;
@@ -28,6 +31,23 @@ public class GameLogic {
         } else {
             player = startingPlayer;
         }
+    }
+
+    public void delayedReset() {
+        // Create a Timer that waits for 0,7 seconds
+        Timer timer = new Timer(700, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Action 2
+                reset();
+
+                // Stop the timer
+                ((Timer)e.getSource()).stop();
+            }
+        });
+
+        // Start the timer
+        timer.setRepeats(false); // Ensure the timer only runs once
+        timer.start();
     }
 
     public void score(String playerTxt) {
@@ -95,6 +115,17 @@ public class GameLogic {
             "Winner", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("/Users/kjell/Dokumente/Programmieren/TicTacToe/src/1021220.png"));
         reset();
         score(winner);
+    }
+
+    public boolean full() {
+        JButton buttons[][] = layout.getButtons();
+        int full = 0;
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons.length; j++) {
+                if (!buttons[i][j].getText().isEmpty()) full++;
+            }
+        }
+        return full == 9;
     }
 
     // Start Bot Logic
