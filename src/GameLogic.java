@@ -45,9 +45,7 @@ public class GameLogic {
         };
         // Create a Timer that waits for 0,7 seconds
         Timer timer = new Timer(700, actionAfter);
-
         // Start the timer
-        timer.setRepeats(false); // Ensure the timer only runs once
         timer.start();
     }
 
