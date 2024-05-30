@@ -1,6 +1,9 @@
+package View;
+
+import Controller.*;
+import Model.GameLogic;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class Layout {
     public JFrame frame = new JFrame("TicTacToe");

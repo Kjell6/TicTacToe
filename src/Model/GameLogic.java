@@ -1,9 +1,11 @@
+package Model;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
+import View.Layout;
 
 public class GameLogic {
     private int scoreX = 0;
@@ -111,7 +113,7 @@ public class GameLogic {
         }
         JOptionPane.showMessageDialog(layout.frame,
                 String.format("<html><center><span style='font-family: Lucida Grande; font-size: 20pt; color: %s;'>Player %s wins!</span></center></html>", color, winner),
-            "Winner", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("/Users/kjell/Dokumente/Programmieren/TicTacToe/src/1021220.png"));
+            "Winner", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/Assets/1021220.png"));
         reset();
         score(winner);
     }
