@@ -7,11 +7,18 @@ public class ScorePanel extends JPanel{
 
     Timer timer;
     GameLogic logic;
+    O oScore;
+    X xScore;
 
     public ScorePanel(GameLogic gl) {
         setBackground(Config.BACKGROUND_COLOR);
         logic = gl;
         setPreferredSize(new Dimension(Config.GAME_SIZE, Config.SCORE_Y_Size));
+        int size = 18;
+        xScore = new X(gl, (Config.GAME_SIZE / 3) - (size / 2), (Config.SCORE_Y_Size / 2), size);
+        xScore.visible = true;
+        oScore = new O(gl, (Config.GAME_SIZE / 3) * 2- (size / 2), (Config.SCORE_Y_Size / 2), size);
+        oScore.visible = true;
     }
 
     public void start() {
@@ -43,20 +50,24 @@ public class ScorePanel extends JPanel{
         //g2d.fillRoundRect(x, y + height / 2, width, height / 2, arcWidth, arcHeight);
 
         //Score zeichnen
+
+        oScore.render(graphics);
+        xScore.render(graphics);
+
         Font font = new Font("Arial", Font.BOLD, 40);
         FontMetrics fm = graphics.getFontMetrics(graphics.getFont());
         //Spieler X
         g2d.setColor(Config.X_COLOR); // Farbe für Spieler X
         g2d.setFont(font);
-        String score = "X - " + logic.scoreX;
-        g2d.drawString(score, ((Config.GAME_SIZE - graphics.getFontMetrics(graphics.getFont()).stringWidth(score)) / 3),
+        String score = " - " + logic.scoreX;
+        g2d.drawString(score, xScore.xPosition + (xScore.size / 2),
                 Config.SCORE_Y_Size / 2 + (fm.getHeight() / 2) + Config.FIELD_SPACE);
 
         //Spieler O
-        score = "O - " + logic.scoreO;
+        score = " - " + logic.scoreO;
         g2d.setColor(Config.O_COLOR); // Farbe für Spieler O
         g2d.setFont(font);
-        g2d.drawString(score, ((Config.GAME_SIZE - graphics.getFontMetrics(graphics.getFont()).stringWidth(score)) / 3) * 2,
+        g2d.drawString(score, oScore.xPosition + (oScore.size / 2) * 2,
                 Config.SCORE_Y_Size / 2 + (fm.getHeight() / 2) + Config.FIELD_SPACE);
     }
 

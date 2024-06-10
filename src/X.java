@@ -23,10 +23,18 @@ public class X {
         this.size = Config.X_SIZE;
         this.color = Config.X_COLOR;
     }
+    public X(GameLogic gl, int xp, int yp, int size) {
+        this.gameLog = gl;
+        visible = false;
+        this.xPosition = xp;
+        this.yPosition = yp;
+        this.size = size;
+        this.color = Config.X_COLOR;
+    }
 
     public void render(Graphics g) {
         if (visible) {
-            int thickness = 50;
+            int thickness = size / 2;
             g.setColor(color);
             Graphics2D g2d = (Graphics2D) g;
             g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));

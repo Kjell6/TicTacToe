@@ -22,6 +22,13 @@ public class O {
         this.size = Config.O_SIZE;
         this.color = Config.O_COLOR;
     }
+    public O(GameLogic gl, int xp, int yp, int size) {
+        this.gameLog = gl;
+        this.xPosition = xp;
+        this.yPosition = yp;
+        this.size = size;
+        this.color = Config.O_COLOR;
+    }
 
     public void render(Graphics g) {
         if (this.visible) {
@@ -32,7 +39,13 @@ public class O {
             // Draw outer circle
             g2d.fillOval(xPosition - outerRadius, yPosition - outerRadius, 2 * outerRadius, 2 * outerRadius);
             // Draw inner circle to create a hole
-            g2d.setColor(Config.FIELD_COLOR); // Set color to the background color to create a "hole"
+            Color innercolor;
+            if (yPosition < 50) {
+                innercolor = Config.BACKGROUND_COLOR;
+            } else {
+                innercolor = Config.FIELD_COLOR;
+            }
+            g2d.setColor(innercolor); // Set color to the background color to create a "hole"
             g2d.fillOval(xPosition - innerRadius, yPosition - innerRadius, 2 * innerRadius, 2 * innerRadius);
         }
     }
