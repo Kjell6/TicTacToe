@@ -1,12 +1,12 @@
 import java.awt.*;
 
-public class Field {
+public class PlayerObject {
     protected java.awt.Color color;
     protected int xPosition;
     protected int yPosition;
     protected int size;
     protected GameLogic gameLog;
-    public String content;
+    public boolean visible;
 
     /**
      * Konstruktor. Initialisiert GameLogic, Position, Größe und Farbe.
@@ -15,35 +15,18 @@ public class Field {
      * @param xp x-Position
      * @param yp y-Position
      */
-    public Field(GameLogic gl, int xp, int yp) {
+    public PlayerObject(GameLogic gl, int xp, int yp) {
         this.gameLog = gl;
+        visible = false;
         this.xPosition = xp;
         this.yPosition = yp;
-        this.size = Config.FIELD_SIZE;
-        this.content = "";
-        this.color = Config.FIELD_COLOR;
     }
-
-    public void render(Graphics graphics) {
-        graphics.setColor(this.color);
-        graphics.fillRoundRect(xPosition - size / 2, yPosition - size / 2, size, size, 50, 50);
-    }
-
-    public String getFieldValue() {
-        return content;
-    }
-
-    public void setFieldValue(String s) {
-        content = s;
-    }
-
-    /**
-     * Gibt die Hitbox des Objekts zurück.
-     *
-     * @return Hitbox
-     */
-    public Rectangle getHitBox() {
-        return new Rectangle(this.xPosition - this.size / 2, this.yPosition - this.size / 2, this.size, this.size);
+    public PlayerObject(GameLogic gl, int xp, int yp, int size) {
+        this.gameLog = gl;
+        visible = false;
+        this.xPosition = xp;
+        this.yPosition = yp;
+        this.size = size;
     }
 
     /**

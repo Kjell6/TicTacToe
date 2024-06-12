@@ -11,8 +11,10 @@ public class Config {
     public static final int O_SIZE = 80;
     public static final Color X_COLOR = new Color(39, 196, 86);
     public static final Color O_COLOR = new Color(92, 31, 239, 255);
-    public static final Color FIELD_COLOR = new Color(44, 44, 44);
-    public static final Color BUTTON_COLOR = new Color(28, 28, 28);
+    public static final Color FIELD_COLOR = new Color(0, 0, 0);
+    public static final Color BUTTON_COLOR = new Color(44, 44, 44);
+    public static final Color BUTTON_COLOR_Pressed = new Color(28, 28, 28);
+    public static final Color LINE_COLOR = new Color(49, 46, 50);
     public static final Color BACKGROUND_COLOR = new Color(0, 0, 0, 255);
 
 }

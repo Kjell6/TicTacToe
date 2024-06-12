@@ -81,16 +81,16 @@ public class GameLogic extends JPanel{
 
             String playerTxt = "";
             if (fieldPressed) {
-                if (fields[fieldI][fieldJ].getText().isEmpty()) {
+                if (fields[fieldI][fieldJ].getFieldValue().isEmpty()) {
                     if (player % 2 != 0) {
                         player++;
                         playerTxt ="X";
-                        fields[fieldI][fieldJ].setText(playerTxt);
+                        fields[fieldI][fieldJ].setFieldValue(playerTxt);
                         XonField[fieldI][fieldJ].visible = true;
                     } else {
                         player++;
                         playerTxt = "O";
-                        fields[fieldI][fieldJ].setText(playerTxt);
+                        fields[fieldI][fieldJ].setFieldValue(playerTxt);
                         OonField[fieldI][fieldJ].visible = true;
                     }
 
@@ -154,13 +154,23 @@ public class GameLogic extends JPanel{
                 OonField[i][j].render(graphics);
             }
         }
+
+        // Linien zeichnen
+        g2d.setColor(Config.LINE_COLOR);
+        float[] dashPattern = {5, 5}; // Länge der Striche und Lücken in Pixeln
+        BasicStroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10, dashPattern, 0);
+        g2d.setStroke(dashed);
+        g2d.drawLine(0, Config.GAME_SIZE / 3, Config.GAME_SIZE, Config.GAME_SIZE / 3);
+        g2d.drawLine(0, (Config.GAME_SIZE / 3) * 2, Config.GAME_SIZE, (Config.GAME_SIZE / 3) * 2);
+        g2d.drawLine((Config.GAME_SIZE / 3), 0, (Config.GAME_SIZE / 3), Config.GAME_SIZE);
+        g2d.drawLine((Config.GAME_SIZE / 3) * 2, 0, ((Config.GAME_SIZE / 3) * 2), Config.GAME_SIZE);
         // synchronize graphics state
     }
 
     public void reset() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                fields[i][j].setText("");
+                fields[i][j].setFieldValue("");
                 XonField[i][j].visible = false;
                 OonField[i][j].visible = false;
             }
@@ -203,29 +213,26 @@ public class GameLogic extends JPanel{
 
         for (int i = 0; i < fs.length; i++) {
             //Horizontal
-            if (fs[i][0].getText().equals(fs[i][1].getText())
-                    && fs[i][0].getText().equals(fs[i][2].getText())
-                    && !fs[i][0].getText().isEmpty()) {
+            if (fs[i][0].getFieldValue().equals(fs[i][1].getFieldValue())
+                    && fs[i][0].getFieldValue().equals(fs[i][2].getFieldValue())
+                    && !fs[i][0].getFieldValue().isEmpty()) {
                 return true;
             }
 
             //Vertikal
-            if (fs[0][i].getText().equals(fs[1][i].getText())
-                    && fs[0][i].getText().equals(fs[2][i].getText())
-                    && !fs[0][i].getText().isEmpty()) {
+            if (fs[0][i].getFieldValue().equals(fs[1][i].getFieldValue())
+                    && fs[0][i].getFieldValue().equals(fs[2][i].getFieldValue())
+                    && !fs[0][i].getFieldValue().isEmpty()) {
                 return true;
             }
         }
 
         //Diagonal
-        if (!fs[1][1].getText().isEmpty() &&
-                ((fs[0][0].getText().equals(fs[1][1].getText()) &&
-                        fs[0][0].getText().equals(fs[2][2].getText())) ||
-                        (fs[0][2].getText().equals(fs[1][1].getText()) &&
-                                fs[0][2].getText().equals(fs[2][0].getText())))) {
-            return true;
-        }
-        return false;
+        return !fs[1][1].getFieldValue().isEmpty() &&
+                ((fs[0][0].getFieldValue().equals(fs[1][1].getFieldValue()) &&
+                        fs[0][0].getFieldValue().equals(fs[2][2].getFieldValue())) ||
+                        (fs[0][2].getFieldValue().equals(fs[1][1].getFieldValue()) &&
+                                fs[0][2].getFieldValue().equals(fs[2][0].getFieldValue())));
     }
 
     public String getWinner() {
@@ -243,13 +250,13 @@ public class GameLogic extends JPanel{
     public void showWinner() {
         String winner = getWinner();
         String color = "";
+        Color c;
         if (winner.equals("X")) {
-            Color c = Config.X_COLOR;
-            color = "rgb(" + c.getRed() + ", " + c.getGreen() + ", " + c.getBlue() + ")";
+            c = Config.X_COLOR;
         } else {
-            Color c = Config.O_COLOR;
-            color = "rgb(" + c.getRed() + ", " + c.getGreen() + ", " + c.getBlue() + ")";
+            c = Config.O_COLOR;
         }
+        color = "rgb(" + c.getRed() + ", " + c.getGreen() + ", " + c.getBlue() + ")";
         JOptionPane.showMessageDialog(this,
                 String.format("<html><center><span style='font-family: Lucida Grande; font-size: 20pt; color: %s;'>Player %s wins!</span></center></html>", color, winner),
                 "Winner", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/Assets/1021220.png"));
@@ -258,11 +265,10 @@ public class GameLogic extends JPanel{
     }
 
     public boolean full() {
-        Field[][] fs = fields;
         int full = 0;
-        for (int i = 0; i < fields.length; i++) {
+        for (Field[] field : fields) {
             for (int j = 0; j < fields.length; j++) {
-                if (!fields[i][j].content.isEmpty()) full++;
+                if (!field[j].content.isEmpty()) full++;
             }
         }
         return full == 9;
@@ -286,195 +292,80 @@ public class GameLogic extends JPanel{
         if (fs[y][x].content.isEmpty()) {
             fs[y][x].content = "O";
             OonField[y][x].visible = true;
-        } else {
-            if (usedFields < 9) botRandom();
+        } else if (usedFields < 9) {
+            botRandom();
         }
     }
 
-    private boolean winningRows() {
-        Field[][] fs = fields;
-        int count = 0;
-        int countX = 0;
-        int row = -1;
-        String botPlayer = "";
+    private boolean checkWinPossibility(String player) {
+        return checkLines(player, true) || checkLines(player, false) || checkDiagonals(player);
+    }
+
+    private boolean checkLines(String player, boolean isRow) {
         for (int i = 0; i < 3; i++) {
+            int playerCount = 0;
+            int opponentCount = 0;
+            int emptyField = -1;
             for (int j = 0; j < 3; j++) {
-                if (fs[i][j].getText().equals("O")) count++;
-                if (fs[i][j].getText().equals("X")) countX++;
-            }
-            if (count == 2 && countX == 0) row = i;
-            count = 0;
-            countX = 0;
-        }
+                Field current;
+                if (isRow) {
+                    current = fields[i][j];
+                } else {
+                    current = fields[j][i];
+                }
 
-        if (row > -1) {
-            for (int i = 0; i < 3; i++) {
-                if (fs[row][i].getText().isEmpty()) {
-                    fs[row][i].setText("O");
-                    OonField[row][i].visible = true;
-                    i = 3;
+                if (current.getFieldValue().equals(player)) {
+                    playerCount++;
+                } else if (!current.getFieldValue().isEmpty()) {
+                    opponentCount++;
+                } else {
+                    emptyField = j;
                 }
             }
-        }
-
-        return row > -1;
-    }
-
-    private boolean winningColumn() {
-        Field[][] fs = fields;
-        int count = 0;
-        int countX = 0;
-        int column = -1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (fs[j][i].getText().equals("O")) count++;
-                if (fs[j][i].getText().equals("X")) countX++;
-            }
-            if (count == 2 && countX == 0) column = i;
-            count = 0;
-            countX = 0;
-        }
-
-        if (column > -1) {
-            for (int i = 0; i < 3; i++) {
-                if (fs[i][column].getText().isEmpty()) {
-                    fs[i][column].setText("O");
-                    OonField[i][column].visible = true;
-                    i = 3;
+            if (playerCount == 2 && opponentCount == 0 && emptyField != -1) {
+                if (isRow) {
+                    fields[i][emptyField].setFieldValue("O");
+                    OonField[i][emptyField].visible = true;
+                } else {
+                    fields[emptyField][i].setFieldValue("O");
+                    OonField[emptyField][i].visible = true;
                 }
-            }
-        }
-
-        return column > -1;
-    }
-
-    private boolean winningDiagonal() {
-        Field[][] fs = fields;
-        int count = 0;
-        int countX = 0;
-        //Links oben nach rechts unten
-        for (int j = 0; j < 3; j++) {
-            if (fs[j][j].getText().equals("O")) count++;;
-            if (fs[j][j].getText().equals("X")) countX++;
-        }
-        if (count == 2 && countX == 0) {
-            for (int j = 0; j < 3; j++) {
-                if (fs[j][j].getText().isEmpty()) {
-                    fs[j][j].setText("O");
-                    OonField[j][j].visible = true;
-                    return true;
-                }
-            }
-        }
-        count = 0;
-        countX = 0;
-
-        //links unten nach rechts oben
-        for (int i = 2, j = 0; j < 3; j++, i--) {
-            if (fs[i][j].getText().equals("O")) count++;;
-            if (fs[i][j].getText().equals("X")) countX++;
-        }
-        if (count == 2 && countX == 0) {
-            for (int i = 2, j = 0; j < 3; j++, i--) {
-                if (fs[i][j].getText().isEmpty()) {
-                    fs[i][j].setText("O");
-                    OonField[i][j].visible = true;
-                    return true;
-                }
+                return true;
             }
         }
         return false;
     }
 
-    private boolean losingRows() {
-        Field[][] fs = fields;
-        int count = 0;
-        int countO = 0;
-        int row = -1;
+    private boolean checkDiagonals(String player) {
+        int[] playerCounts = new int[2];
+        int[] opponentCounts = new int[2];
+        int[][] emptyFields = new int[2][2];
+
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (fs[i][j].getText().equals("X")) count++;
-                if (fs[i][j].getText().equals("O")) countO++;
+            if (fields[i][i].getFieldValue().equals(player)) {
+                playerCounts[0]++;
+            } else if (!fields[i][i].getFieldValue().isEmpty()) {
+                opponentCounts[0]++;
+            } else {
+                emptyFields[0][0] = i;
+                emptyFields[0][1] = i;
             }
-            if (count == 2 && countO == 0) row = i;
-            count = 0;
-            countO = 0;
-        }
 
-        if (row > -1) {
-            for (int i = 0; i < 3; i++) {
-                if (fs[row][i].getText().isEmpty()) {
-                    fs[row][i].setText("O");
-                    OonField[row][i].visible = true;
-                    i = 3;
-                }
-            }
-        }
-
-        return row > -1;
-    }
-
-    private boolean losingColumn() {
-        Field[][] fs = fields;
-        int count = 0;
-        int countO = 0;
-        int column = -1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (fs[j][i].getText().equals("X")) count++;
-                if (fs[j][i].getText().equals("O")) countO++;
-            }
-            if (count == 2 && countO == 0) column = i;
-            count = 0;
-            countO = 0;
-        }
-
-        if (column > -1) {
-            for (int i = 0; i < 3; i++) {
-                if (fs[i][column].getText().isEmpty()) {
-                    fs[i][column].setText("O");
-                    OonField[i][column].visible = true;
-                    i = 3;
-                }
+            if (fields[2 - i][i].getFieldValue().equals(player)) {
+                playerCounts[1]++;
+            } else if (!fields[2 - i][i].getFieldValue().isEmpty()) {
+                opponentCounts[1]++;
+            } else {
+                emptyFields[1][0] = 2 - i;
+                emptyFields[1][1] = i;
             }
         }
 
-        return column > -1;
-    }
-
-    private boolean losingDiagonal() {
-        Field[][] fs = fields;
-        int count = 0;
-        int countO = 0;
-        //Links oben nach rechts unten
-        for (int j = 0; j < 3; j++) {
-            if (fs[j][j].getText().equals("X")) count++;;
-            if (fs[j][j].getText().equals("O")) countO++;
-        }
-        if (count == 2 && countO == 0) {
-            for (int j = 0; j < 3; j++) {
-                if (fs[j][j].getText().isEmpty()) {
-                    fs[j][j].setText("O");
-                    OonField[j][j].visible = true;
-                    return true;
-                }
-            }
-        }
-        count = 0;
-        countO = 0;
-
-        //links unten nach rechts oben
-        for (int i = 2, j = 0; j < 3; j++, i--) {
-            if (fs[i][j].getText().equals("X")) count++;;
-            if (fs[i][j].getText().equals("O")) countO++;
-        }
-        if (count == 2 && countO == 0) {
-            for (int i = 2, j = 0; j < 3; j++, i--) {
-                if (fs[i][j].getText().isEmpty()) {
-                    fs[i][j].setText("O");
-                    OonField[i][j].visible = true;
-                    return true;
-                }
+        for (int i = 0; i < 2; i++) {
+            if (playerCounts[i] == 2 && opponentCounts[i] == 0) {
+                fields[emptyFields[i][0]][emptyFields[i][1]].setFieldValue("O");
+                OonField[emptyFields[i][0]][emptyFields[i][1]].visible = true;
+                return true;
             }
         }
         return false;
@@ -482,8 +373,7 @@ public class GameLogic extends JPanel{
 
     public void bot() {
         if (difficulty == 3) {
-            if (!winningRows() && !winningColumn() && !winningDiagonal()
-                    && !losingRows() && !losingColumn() && !losingDiagonal()) {
+            if (!checkWinPossibility("O") && !checkWinPossibility("X")) {
                 botRandom();
             }
         }
@@ -491,8 +381,7 @@ public class GameLogic extends JPanel{
             Random rand = new Random();
             int diff = rand.nextInt(3);
             if (diff != 0) {
-                if (!winningRows() && !winningColumn() && !winningDiagonal()
-                        && !losingRows() && !losingColumn() && !losingDiagonal()) {
+                if (!checkWinPossibility("O") && !checkWinPossibility("X")) {
                     botRandom();
                 }
             } else {
@@ -503,6 +392,7 @@ public class GameLogic extends JPanel{
             botRandom();
         }
     }
+    //End Bot Logic
 
     public void playerButtonBot() {
         if (startingPlayer % 2 == 0) {
@@ -513,7 +403,6 @@ public class GameLogic extends JPanel{
             }
         }
     }
-    //End Bot Logic
 
     public void setStartingPlayerPlayer(int p) {
         startingPlayer = p;
@@ -523,7 +412,4 @@ public class GameLogic extends JPanel{
         return startingPlayer;
     }
 
-    public int getPlayer() {
-        return player;
-    }
 }
