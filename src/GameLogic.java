@@ -128,15 +128,27 @@ public class GameLogic extends JPanel{
             }
         }
 
-        // Linien zeichnen
-        g2d.setColor(Config.LINE_COLOR);
-        float[] dashPattern = {5, 5}; // Länge der Striche und Lücken in Pixeln
-        BasicStroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10, dashPattern, 0);
-        g2d.setStroke(dashed);
-        g2d.drawLine(0, Config.GAME_SIZE / 3, Config.GAME_SIZE, Config.GAME_SIZE / 3);
-        g2d.drawLine(0, (Config.GAME_SIZE / 3) * 2, Config.GAME_SIZE, (Config.GAME_SIZE / 3) * 2);
-        g2d.drawLine((Config.GAME_SIZE / 3), 0, (Config.GAME_SIZE / 3), Config.GAME_SIZE);
-        g2d.drawLine((Config.GAME_SIZE / 3) * 2, 0, ((Config.GAME_SIZE / 3) * 2), Config.GAME_SIZE);
+        // Linien zeichnen#
+        if (Config.design == 1) {
+            g2d.setColor(Config.LINE_COLOR);
+            int thickness = 20;
+            int space = 30;
+            g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2d.drawLine(space, Config.GAME_SIZE / 3, Config.GAME_SIZE - space, Config.GAME_SIZE / 3);
+            g2d.drawLine(space, (Config.GAME_SIZE / 3) * 2, Config.GAME_SIZE - space, (Config.GAME_SIZE / 3) * 2);
+            g2d.drawLine((Config.GAME_SIZE / 3), space, (Config.GAME_SIZE / 3), Config.GAME_SIZE - space);
+            g2d.drawLine((Config.GAME_SIZE / 3) * 2, space, ((Config.GAME_SIZE / 3) * 2), Config.GAME_SIZE - space);
+        }
+        if (Config.design == 2) {
+            g2d.setColor(Config.LINE_COLOR);
+            float[] dashPattern = {5, 5}; // Länge der Striche und Lücken in Pixeln
+            BasicStroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10, dashPattern, 0);
+            g2d.setStroke(dashed);
+            g2d.drawLine(0, Config.GAME_SIZE / 3, Config.GAME_SIZE, Config.GAME_SIZE / 3);
+            g2d.drawLine(0, (Config.GAME_SIZE / 3) * 2, Config.GAME_SIZE, (Config.GAME_SIZE / 3) * 2);
+            g2d.drawLine((Config.GAME_SIZE / 3), 0, (Config.GAME_SIZE / 3), Config.GAME_SIZE);
+            g2d.drawLine((Config.GAME_SIZE / 3) * 2, 0, ((Config.GAME_SIZE / 3) * 2), Config.GAME_SIZE);
+        }
         // synchronize graphics state
     }
 
@@ -227,6 +239,7 @@ public class GameLogic extends JPanel{
         } else {
             c = Config.O_COLOR;
         }
+        if (Config.design == 2) c = Color.BLACK;
         color = "rgb(" + c.getRed() + ", " + c.getGreen() + ", " + c.getBlue() + ")";
         JOptionPane.showMessageDialog(this,
                 String.format("<html><center><span style='font-family: Lucida Grande; font-size: 20pt; color: %s;'>Player %s wins!</span></center></html>", color, winner),
@@ -372,4 +385,16 @@ public class GameLogic extends JPanel{
         return startingPlayer;
     }
 
+    /*
+    public void changeDesign() {
+        if (design == 1) {
+            design = 2;
+            Config.setDesign(design);
+        }
+        if (design == 2) {
+            design = 1;
+            Config.setDesign(design);
+        }
+    }
+    */
 }

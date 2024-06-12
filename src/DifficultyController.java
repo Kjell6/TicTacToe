@@ -18,7 +18,7 @@ public class DifficultyController extends MouseAdapter {
             gameLogic.reset();
         } else {
             if (gameLogic.difficulty == 1) {
-                button.setText("Difficulty: Medium");
+                button.setText("Difficulty: Mid");
                 gameLogic.difficulty = 2;
                 gameLogic.reset();
             } else {

@@ -1,7 +1,6 @@
 import java.awt.*;
 
 public class PlayerObject {
-    protected java.awt.Color color;
     protected int xPosition;
     protected int yPosition;
     protected int size;

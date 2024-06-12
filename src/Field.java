@@ -33,6 +33,7 @@ public class Field {
         graphics.fillRoundRect(xPosition - size / 2, yPosition - size / 2, size, size, 50, 50);
         x.render(graphics);
         o.render(graphics);
+        color = Config.FIELD_COLOR;
     }
 
     public String getFieldValue() {

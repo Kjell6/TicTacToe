@@ -6,16 +6,18 @@ public class Settings extends JPanel{
     private JButton botButton;
     private JButton playerButton;
     private JButton difficultyButton;
+    private JButton designButton;
     private GameLogic gameLogic;
     private ResetController resetController;
     private BotController botController;
     private PlayerController playerController;
     private DifficultyController difficultyController;
-    private Color foreground =  new Color(190, 190, 190);
+    private DesignController designController;
+    private Color foreground =  new Color(246, 248, 255);
 
     public Settings(GameLogic gl) {
         setBackground(Config.BACKGROUND_COLOR);
-        setLayout(new GridLayout(1, 4));
+        setLayout(new GridLayout(2, 3));
         this.gameLogic = gl;
 
         resetButton = new CustomButton("Reset");
@@ -26,13 +28,17 @@ public class Settings extends JPanel{
         playerButton = new CustomButton("Starting: X");
         this.playerController = new PlayerController(gl);
         playerButton.addMouseListener(playerController);
-        playerButton.setForeground(Config.X_COLOR);
+        //playerButton.setForeground(Config.X_COLOR);
         add(playerButton);
+
+        designButton = new CustomButton("Design: Default");
+        this.designController = new DesignController(this, gl);
+        designButton.addMouseListener(designController);
+        add(designButton);
 
         botButton = new CustomButton("enable Bot");
         this.botController = new BotController(gl);
         botButton.addMouseListener(botController);
-        botButton.setForeground(new Color(90, 158, 94));
         add(botButton);
 
         difficultyButton = new CustomButton("Difficulty: Hard");
@@ -42,7 +48,7 @@ public class Settings extends JPanel{
 
 
 
-        setPreferredSize(new Dimension(Config.GAME_SIZE, Config.SETTINGS_Y_Size));
+        setPreferredSize(new Dimension(Config.GAME_SIZE, Config.SETTINGS_Y_SIZE));
     }
     public void setPlayerButton(String txt) {
         playerButton.setText(txt);
@@ -61,14 +67,30 @@ public class Settings extends JPanel{
 
         @Override
         protected void paintComponent(Graphics g) {
-            if (getModel().isPressed()) {
-                g.setColor(Config.BUTTON_COLOR_Pressed);
-            } else {
-                g.setColor(Config.BUTTON_COLOR);
+            Graphics2D g2d = (Graphics2D) g.create();
+            if (Config.design == 1) {
+                if (getModel().isPressed()) {
+                    g.setColor(Config.BUTTON_COLOR_Pressed);
+                } else {
+                    g.setColor(Config.BUTTON_COLOR);
+                }
+                g.fillRoundRect(5, 5, getWidth() - 10, getHeight() - 10, 20, 20);
+                super.paintComponent(g);
             }
-            g.fillRoundRect(5, 5, getWidth() - 10, getHeight() - 10, 20, 20);
-            super.paintComponent(g);
+
+            if (Config.design == 2) {
+                if (getModel().isPressed()) {
+                    setForeground(Config.BUTTON_COLOR_Pressed);
+                } else {
+                    setForeground(Config.BUTTON_COLOR);
+                }
+                super.paintComponent(g);
+            }
         }
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        setBackground(Config.BACKGROUND_COLOR);
     }
 
 }

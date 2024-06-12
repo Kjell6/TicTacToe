@@ -59,16 +59,17 @@ public class ScorePanel extends JPanel{
         //Spieler X
         g2d.setColor(Config.X_COLOR); // Farbe für Spieler X
         g2d.setFont(font);
-        String score = " - " + logic.scoreX;
+        String score = " : " + logic.scoreX;
         g2d.drawString(score, xScore.xPosition + (xScore.size / 2),
                 Config.SCORE_Y_Size / 2 + (fm.getHeight() / 2) + Config.FIELD_SPACE);
 
         //Spieler O
-        score = " - " + logic.scoreO;
+        score = " : " + logic.scoreO;
         g2d.setColor(Config.O_COLOR); // Farbe für Spieler O
-        g2d.setFont(font);
         g2d.drawString(score, oScore.xPosition + (oScore.size / 2) * 2,
                 Config.SCORE_Y_Size / 2 + (fm.getHeight() / 2) + Config.FIELD_SPACE);
+
+        setBackground(Config.BACKGROUND_COLOR);
     }
 
     private class GameLoop implements ActionListener {

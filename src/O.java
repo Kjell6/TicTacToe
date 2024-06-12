@@ -12,19 +12,18 @@ public class O extends PlayerObject{
     public O(GameLogic gl, int xp, int yp) {
         super(gl, xp, yp);
         this.size = Config.O_SIZE;
-        this.color = Config.O_COLOR;
     }
     public O(GameLogic gl, int xp, int yp, int size) {
         super(gl, xp, yp, size);
-        this.color = Config.O_COLOR;
     }
 
     public void render(Graphics g) {
         if (this.visible) {
             int outerRadius = size;
-            int innerRadius = size / 2;
+            int innerRadius = size / 2;;
+            if (Config.design == 2) innerRadius = size - ((size / 8)*3);
             Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(color);
+            g2d.setColor(Config.O_COLOR);
             // Draw outer circle
             g2d.fillOval(xPosition - outerRadius, yPosition - outerRadius, 2 * outerRadius, 2 * outerRadius);
             // Draw inner circle to create a hole
