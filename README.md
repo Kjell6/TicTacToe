@@ -1,2 +1,4 @@
 # TicTacToe
-Ein TicTacToe Spiel, für 1 oder 2 Spielern
+Ein klassisches Tic Tac Toe spiel für ein bis zwei Personen. 
+- Zwei-Spieler-Modus: Spiele gegen einen Freund.
+- Einzelspieler-Modus: Spiele gegen den Computer mit unterschiedlichen Schwierigkeitsstufen.
