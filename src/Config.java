@@ -4,7 +4,7 @@ public class Config {
     public static final int FIELD_SIZE = 200;
     public static final int FIELD_SPACE = 7;
     public static final int GAME_SIZE = Config.FIELD_SIZE * 3 + Config.FIELD_SPACE * 4;
-    public static final int LOOP_PERIOD = 10;
+    public static final int LOOP_PERIOD = 50;
     public static final int SETTINGS_Y_Size = 100;
     public static final int SCORE_Y_Size = 45;
     public static final int X_SIZE = 100;

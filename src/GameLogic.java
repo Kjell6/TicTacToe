@@ -6,13 +6,8 @@ import java.util.*;
 
 public class GameLogic extends JPanel{
     private Field[][] fields;
-    public X[][] XonField;
-    public O[][] OonField;
-    private X x;
-    private O o;
     Timer timer;
     Settings settings;
-    ScorePanel scorePanel;
     public int player = 1;
     private int startingPlayer = 1;
     public boolean botActive = false;
@@ -23,8 +18,6 @@ public class GameLogic extends JPanel{
     public GameLogic() {
         setBackground(Config.BACKGROUND_COLOR);
         fields = new Field[3][3];
-        OonField = new O[3][3];
-        XonField = new X[3][3];
         int space = Config.FIELD_SPACE;
         int height = Config.FIELD_SIZE + space;
         int width = Config.FIELD_SIZE * 3 + (2 * space);
@@ -36,14 +29,6 @@ public class GameLogic extends JPanel{
                 int xP = start + j * (Config.FIELD_SIZE + space);
                 Field f = new Field(this, xP, yP);
                 fields[i][j] = f;
-
-                //O auf Feldern erzeugen
-                O o = new O(this, xP, yP);
-                OonField[i][j] = o;
-
-                //X auf Feldern erzeugen
-                X x = new X(this, xP, yP);
-                XonField[i][j] = x;
             }
         }
 
@@ -84,14 +69,10 @@ public class GameLogic extends JPanel{
                 if (fields[fieldI][fieldJ].getFieldValue().isEmpty()) {
                     if (player % 2 != 0) {
                         player++;
-                        playerTxt ="X";
-                        fields[fieldI][fieldJ].setFieldValue(playerTxt);
-                        XonField[fieldI][fieldJ].visible = true;
+                        fields[fieldI][fieldJ].setValueX();
                     } else {
                         player++;
-                        playerTxt = "O";
-                        fields[fieldI][fieldJ].setFieldValue(playerTxt);
-                        OonField[fieldI][fieldJ].visible = true;
+                        fields[fieldI][fieldJ].setValueO();
                     }
 
                     if(botActive && !checkWin()) {
@@ -105,19 +86,13 @@ public class GameLogic extends JPanel{
                     if (full()) {
                         delayedReset();
                     }
-
                 }
             }
         }
-
     }
 
     public void setSettings(Settings s) {
         settings = s;
-    }
-
-    public void setScorePanel(ScorePanel s) {
-        this.scorePanel = s;
     }
 
     public void onTick() {
@@ -150,8 +125,6 @@ public class GameLogic extends JPanel{
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 fields[i][j].render(graphics);
-                XonField[i][j].render(graphics);
-                OonField[i][j].render(graphics);
             }
         }
 
@@ -170,9 +143,7 @@ public class GameLogic extends JPanel{
     public void reset() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                fields[i][j].setFieldValue("");
-                XonField[i][j].visible = false;
-                OonField[i][j].visible = false;
+                fields[i][j].setValueEmpty();
             }
         }
         if (botActive && startingPlayer % 2 == 0) {
@@ -260,8 +231,8 @@ public class GameLogic extends JPanel{
         JOptionPane.showMessageDialog(this,
                 String.format("<html><center><span style='font-family: Lucida Grande; font-size: 20pt; color: %s;'>Player %s wins!</span></center></html>", color, winner),
                 "Winner", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/Assets/1021220.png"));
-        reset();
         score(winner);
+        reset();
     }
 
     public boolean full() {
@@ -282,17 +253,9 @@ public class GameLogic extends JPanel{
         int y = rand.nextInt(3);
         int x = rand.nextInt(3);
 
-        int usedFields = 0;
-        for (Field[] f1 : fs) {
-            for (Field f : f1) {
-                if (!f.content.isEmpty()) usedFields++;
-            }
-        }
-
         if (fs[y][x].content.isEmpty()) {
-            fs[y][x].content = "O";
-            OonField[y][x].visible = true;
-        } else if (usedFields < 9) {
+            fs[y][x].setValueO();
+        } else if (!full()) {
             botRandom();
         }
     }
@@ -324,11 +287,9 @@ public class GameLogic extends JPanel{
             }
             if (playerCount == 2 && opponentCount == 0 && emptyField != -1) {
                 if (isRow) {
-                    fields[i][emptyField].setFieldValue("O");
-                    OonField[i][emptyField].visible = true;
+                    fields[i][emptyField].setValueO();
                 } else {
-                    fields[emptyField][i].setFieldValue("O");
-                    OonField[emptyField][i].visible = true;
+                    fields[emptyField][i].setValueO();
                 }
                 return true;
             }
@@ -363,8 +324,7 @@ public class GameLogic extends JPanel{
 
         for (int i = 0; i < 2; i++) {
             if (playerCounts[i] == 2 && opponentCounts[i] == 0) {
-                fields[emptyFields[i][0]][emptyFields[i][1]].setFieldValue("O");
-                OonField[emptyFields[i][0]][emptyFields[i][1]].visible = true;
+                fields[emptyFields[i][0]][emptyFields[i][1]].setValueO();
                 return true;
             }
         }

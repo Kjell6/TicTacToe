@@ -6,6 +6,8 @@ public class Field {
     protected int yPosition;
     protected int size;
     protected GameLogic gameLog;
+    public X x;
+    public O o;
     public String content;
 
     /**
@@ -22,19 +24,33 @@ public class Field {
         this.size = Config.FIELD_SIZE;
         this.content = "";
         this.color = Config.FIELD_COLOR;
+        x = new X(gl, xp, yp);
+        o = new O(gl, xp, yp);
     }
 
     public void render(Graphics graphics) {
         graphics.setColor(this.color);
         graphics.fillRoundRect(xPosition - size / 2, yPosition - size / 2, size, size, 50, 50);
+        x.render(graphics);
+        o.render(graphics);
     }
 
     public String getFieldValue() {
         return content;
     }
 
-    public void setFieldValue(String s) {
-        content = s;
+    public void setValueX() {
+        content = "X";
+        x.visible = true;
+    }
+    public void setValueO() {
+        content = "O";
+        o.visible = true;
+    }
+    public void setValueEmpty() {
+        content = "";
+        x.visible = false;
+        o.visible = false;
     }
 
     /**

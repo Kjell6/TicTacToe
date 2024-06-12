@@ -21,7 +21,6 @@ public class TicTacToe {
         Settings settings = new Settings(gameLogic);
         gameLogic.setSettings(settings);
         ScorePanel scorePanel = new ScorePanel(gameLogic);
-        gameLogic.setScorePanel(scorePanel);
         gameLogic.start();
 
         // add panel to window
