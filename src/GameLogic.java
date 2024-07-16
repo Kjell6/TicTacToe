@@ -131,7 +131,7 @@ public class GameLogic extends JPanel{
         // Linien zeichnen#
         if (Config.design == 1) {
             g2d.setColor(Config.LINE_COLOR);
-            int thickness = 20;
+            int thickness = 10;
             int space = 30;
             g2d.setStroke(new BasicStroke(thickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2d.drawLine(space, Config.GAME_SIZE / 3, Config.GAME_SIZE - space, Config.GAME_SIZE / 3);
@@ -146,8 +146,8 @@ public class GameLogic extends JPanel{
             g2d.setStroke(dashed);
             g2d.drawLine(0, Config.GAME_SIZE / 3, Config.GAME_SIZE, Config.GAME_SIZE / 3);
             g2d.drawLine(0, (Config.GAME_SIZE / 3) * 2, Config.GAME_SIZE, (Config.GAME_SIZE / 3) * 2);
-            g2d.drawLine((Config.GAME_SIZE / 3), 0, (Config.GAME_SIZE / 3), Config.GAME_SIZE);
-            g2d.drawLine((Config.GAME_SIZE / 3) * 2, 0, ((Config.GAME_SIZE / 3) * 2), Config.GAME_SIZE);
+            g2d.drawLine((Config.GAME_SIZE / 3), 10, (Config.GAME_SIZE / 3), Config.GAME_SIZE);
+            g2d.drawLine((Config.GAME_SIZE / 3) * 2, 10, ((Config.GAME_SIZE / 3) * 2), Config.GAME_SIZE);
         }
         // synchronize graphics state
     }

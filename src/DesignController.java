@@ -15,13 +15,19 @@ public class DesignController extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         JButton button = (JButton) e.getSource();
         int design = Config.design;
-        if (design == 1) {
-            button.setText("Design: Minimal");
-            Config.setDesign(design + 1);
-        }
-        if (design == 2) {
-            button.setText("Design: Default");
-            Config.setDesign(design - 1);
+        String[] designTxt = {"Default", "Minimal"};
+        for (int i = 1; i <= design; i++) {
+            if (i == design) {
+                if (i == designTxt.length) {
+                    button.setText("Design: " + designTxt[0]);
+                    Config.setDesign(1);
+                    i = 2;
+                } else {
+                    button.setText("Design: " + designTxt[i]);
+                    Config.setDesign(design + 1);
+                    i = 2;
+                }
+            }
         }
         set.repaint();
         logic.setBackground(Config.BACKGROUND_COLOR);
